@@ -7,7 +7,6 @@ before do
 end
 
 get '/' do
-  p request.env
   return <<-"EOS"
 <h1>xdomain proxy</h1>
 <p>access http://#{request.env["HTTP_HOST"]}/&lt;url&gt;</p>
