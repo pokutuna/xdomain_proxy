@@ -6,11 +6,19 @@ before do
   response['Access-Control-Allow-Origin'] = '*'
 end
 
-get '/*' do
-  uri = URI.parse(request.env["REQUEST_URI"][1..-1])
-  return 400 unless URI::HTTP === uri
+get '/' do
+  p request.env
+  return <<-"EOS"
+<h1>xdomain proxy</h1>
+<p>access http://#{request.env["HTTP_HOST"]}/&lt;url&gt;</p>
+  EOS
+end
 
+get '/*' do
   begin
+    uri = URI.parse(request.env["REQUEST_URI"][1..-1])
+    raise ArgumentError unless URI::HTTP === uri
+
     response = open(uri)
     return response.read
   rescue => e
