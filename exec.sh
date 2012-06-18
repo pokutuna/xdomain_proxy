@@ -1,2 +1,2 @@
 #! /bin/sh
-thin start -C thin.yaml
+bundle exec thin start -C thin.yaml
